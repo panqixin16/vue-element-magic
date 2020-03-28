@@ -14,7 +14,7 @@
           </template>
           <template slot="paneR">
             <div style="height:100%;padding-top: 15px;">
-                <bottomView :obj.sync="obj"></bottomView>
+                <bottomView :data.sync="data" :id="id"></bottomView>
             </div>
           </template>
         </split-pane>
@@ -36,6 +36,8 @@ export default {
     data(){
         return{
             topHeight: 400,
+            data: null,
+
             obj: {
                 data: null,
                 // config: null
@@ -122,11 +124,11 @@ export default {
             // console.log('top height: ' + height);
         },
         xsupdate(data){
-            this.obj.data = data;
+            this.data = data;
             // this.$nextTick(()=>{
             //     this.$set(this.obj, 'data', data)
             // });
-            // console.log('xsupdate', JSON.stringify(data))
+            console.log('xsupdate', JSON.stringify(data))
         }
     },
 }

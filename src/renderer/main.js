@@ -10,6 +10,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 import db from './datastore'
 
+import CopyButton from './components/CopyButton'
+
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 
 installExtension(VUEJS_DEVTOOLS)
@@ -23,6 +25,8 @@ Vue.config.productionTip = false
 Vue.use(ElementUI);
 
 Vue.prototype.$db = db
+
+Vue.component("CopyButton", CopyButton)
 
 /* eslint-disable no-new */
 new Vue({

@@ -113,8 +113,8 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        this.list = response.data
+        this.total = response.extra.total
       }).finally(() => {
         this.listLoading = false
       })
@@ -248,13 +248,87 @@ export function update(data) {
 
 export function del(data) {
   return request({
-    url: '{{{baseurl}}}del',
+    url: '{{{baseurl}}}delete',
     method: 'post',
-    data
+    data: { id: data.id }
   })
 }
 
-  `
+  `,
+  mock: `
+  import Mock from 'mockjs'
+
+  const List = []
+  const count = 100
+  const item = {{{item}}}
+  
+  for (let i = 0; i < count; i++) {
+    var newItem = Object.assign({}, item);
+    List.push(newItem);
+  }
+  
+  export default [
+    {
+      url: '{{{baseurl}}}list',
+      type: 'get',
+      response: config => {
+        const { page = 1, limit = 20, search } = config.query
+        let mockList = List;     
+        const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+        return {
+          code: 20000,
+          data: pageList,
+          extra: {
+            total: mockList.length
+          }
+        }
+      }
+    },
+  
+    {
+      url: '{{{baseurl}}}create',
+      type: 'post',
+      response: _ => {
+        return {
+          code: 20000,
+          status: 'success',
+          msg: 'success',
+          data: 1,
+          extra: null
+        }
+      }
+    },
+  
+    {
+      url: '{{{baseurl}}}update',
+      type: 'post',
+      response: _ => {
+        return {
+          code: 20000,
+          status: 'success',
+          msg: 'success',
+          data: 1,
+          extra: null
+        }
+      }
+    },
+
+    {
+      url: '{{{baseurl}}}delete',
+      type: 'post',
+      response: _ => {
+        return {
+          code: 20000,
+          status: 'success',
+          msg: 'success',
+          data: 1,
+          extra: null
+        }
+      }
+    }
+
+  ]  
+  `,
 }
 
 

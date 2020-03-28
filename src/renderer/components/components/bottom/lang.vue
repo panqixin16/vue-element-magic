@@ -76,7 +76,7 @@ import tableContent from './templates/table'
         },
         watch: {
             obj: {
-                immediate: true,
+                // immediate: true,
                 deep: true,
                 handler(newValue, oldValue) {
                     if(newValue){
@@ -84,6 +84,9 @@ import tableContent from './templates/table'
                     }
                 }
             }
+        },
+        mounted () {
+            this.paraseObj();
         },
     }
 </script>

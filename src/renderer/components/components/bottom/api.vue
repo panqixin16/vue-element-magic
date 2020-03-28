@@ -1,8 +1,9 @@
 <template>
     <div>
+        <CopyButton :content="textarea"></CopyButton>
         <el-input
         type="textarea"
-        :rows="18"
+        :rows="16"
         v-model="textarea">
         </el-input>
     </div>
@@ -26,11 +27,13 @@ import tableContent from './templates/table'
         methods: {
             parseobj() {
                 this.textarea = tableContent.api + '';
-                //config
-                const baseurl = this.obj.config.api.baseurl;
-                //replace
-                for(var i = 0; i < 4; i ++){
-                    this.textarea = this.textarea.replace('{{{baseurl}}}', baseurl);
+                if(this.obj && this.obj.config){
+                    //config
+                    const baseurl = this.obj.config.api.baseurl;
+                    //replace
+                    for(var i = 0; i < 4; i ++){
+                        this.textarea = this.textarea.replace('{{{baseurl}}}', baseurl);
+                    }
                 }
             }
         },

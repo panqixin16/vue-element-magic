@@ -1,8 +1,9 @@
 <template>
     <div>
+        <CopyButton :content="textarea"></CopyButton>
         <el-input
         type="textarea"
-        :rows="18"
+        :rows="16"
         v-model="textarea">
         </el-input>
     </div>
@@ -104,10 +105,10 @@ import tableContent from './templates/table'
                 var temps = [];
                 temps.push('{');
                 for(var i = 0; i< props_json.length; i ++){
-                    var temp = "key: '',".replace('key', props_json[i]);
+                    var temp = "\t\tkey: '',".replace('key', props_json[i]);
                     temps.push(temp);
                 }
-                temps.push('}');
+                temps.push('\t\t}');
                 this.doReplace('{{{temp}}}', temps.join('\n'));
                 this.doReplace('{{{resetTemp}}}', temps.join('\n'));
             },
@@ -132,7 +133,8 @@ import tableContent from './templates/table'
                     if(newValue){
                         // console.log('vue.vue',JSON.stringify(newValue))
                         // this.textarea = JSON.stringify(newValue);
-                        this.paraseObj();
+                        if(this.obj && this.obj.config)
+                            this.paraseObj();
                     }
                 }
             }
