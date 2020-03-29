@@ -133,7 +133,7 @@ import tableContent from './templates/table'
                     if(newValue){
                         // console.log('vue.vue',JSON.stringify(newValue))
                         // this.textarea = JSON.stringify(newValue);
-                        if(this.obj && this.obj.config)
+                        if(this.obj && this.obj.data && this.obj.config)
                             this.paraseObj();
                     }
                 }

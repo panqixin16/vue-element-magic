@@ -8,16 +8,24 @@
             <mainView :id="id"></mainView>
         </el-main>
         </el-container>
+        <right-panel v-if="true">
+            <settings />
+            
+        </right-panel>
     </div>
 </template>
 
 <script>
 import sideMenu from '@/components/SideMenu'
 import mainView from '@/components/Main'
+import RightPanel from '@/components/RightPanel'
+import settings from '@/components/settings'
 export default {
     components: {
         sideMenu,
-        mainView
+        mainView,
+        RightPanel,
+        settings
     },
     data(){
         return{

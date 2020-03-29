@@ -18,13 +18,17 @@
             id: {
                 type: String,
                 default: ''
+            },
+            prop_json: {
+                type: Number,
+                default: 0
             }
         },
         data() {
             return {
                 xs: null,
                 options: {
-                    showToolbar: false, 
+                    showToolbar: this.$store.getters.xsheetMenuVisible, 
                     showGrid: true,
                     view: {
                          height: this.getHeight,
@@ -123,9 +127,6 @@
                 }else{
                     this.xs = x.spreadsheet('#x-spreadsheet-demo', _this.options) //view: {height: '100%', width: '100%'}
                         .loadData(_this.data).change((cdata) => {
-                            // console.log(cdata);
-                            // console.log('>>>', JSON.stringify(cdata,null, '\t'));
-                            // console.log('>>>', xs.getData());
                             _this.data = _this.xs.getData();//获取最新的数据
                             _this.saveData();//更新数据
                         });
@@ -136,8 +137,24 @@
                 return this.value - 30;
             },
             reset(){
-                if(this.xs) this.xs.loadData(JSON.parse(JSON.stringify(this.data0)));
-                // this.data = JSON.parse(JSON.stringify(this.data0))
+                this.$confirm("It's going to reset the content.", 'Tips', {
+                    confirmButtonText: 'Ok',
+                    cancelButtonText: 'Cancel',
+                    type: 'warning'
+                }).then(() => {
+                    if(this.xs){
+                        this.xs.loadData(JSON.parse(JSON.stringify(this.data0)));
+                         this.$message({
+                            type: 'success',
+                            message: 'Done.'
+                        });  
+                    } 
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: 'Cancel.'
+                    });          
+                });
             },
             saveData(){
                 this.$db.update({ _id: this.id }, { $set: { data: this.data } }, function (err, numReplaced) {
@@ -148,8 +165,7 @@
             }
         },
         mounted () {
-            // this.getData();
-            // this.initSheet();
+            this.getData();;
         },
         watch: {
             value(newValue, oldValue) {
@@ -161,7 +177,6 @@
             },
             id(val){
                 this.getData();
-                // this.initSheet();
             },
             data(val){
                 var newData = [];
@@ -169,22 +184,16 @@
                 for(var i = 0; i < num;i ++)
                     newData.push([]);
                 // console.log('data','数据更新了', JSON.stringify(val, null, '\t'));
-                console.log('data 更新了');
+                // console.log('data 更新了');
                 if(val && val.length > 0){
                     var rows = val[0].rows;
-                    // console.log('rows[0]', rows[0].cells);
-                    var props_json_cells = rows[0].cells;
-                    var props_db_cells = rows[1].cells;
-                    var label_zh_cells = rows[2].cells;
-                    var label_en_cells = rows[3].cells;
-                    var props_json = new Array();
-                    var props_db = new Array();
-                    var label_zh = new Array();
-                    var label_en = new Array();
                     if(rows[0] && rows[0].cells){
                         for(var key in rows[0].cells){
                             if(key==0) continue;
                             for(var j = 0; j < num;j ++){
+                                console.log("prop_json", this.prop_json);
+                                if(!rows[this.prop_json].cells || !rows[this.prop_json].cells[key] || !rows[this.prop_json].cells[key].text)
+                                    continue;
                                 if(rows[j].cells && rows[j].cells[key] && rows[j].cells[key].text)
                                     newData[j].push(rows[j].cells[key].text);
                                 else
@@ -192,37 +201,6 @@
                             }
                         }
                     }
-                    
-                    // for(var key in props_json_cells){
-                    //     if(key!=0 && props_json_cells[key]) 
-                    //         props_json.push(props_json_cells[key].text);
-                    // }
-                    // for(var key in props_db_cells){
-                    //     if(key!=0 && props_db_cells[key]) 
-                    //         props_db.push(props_db_cells[key].text);
-                    // }
-                    // for(var key in label_zh_cells){
-                    //     if(key!=0 && label_zh_cells[key]) 
-                    //         label_zh.push(label_zh_cells[key].text);
-                    // }
-                    // for(var key in label_en_cells){
-                    //     if(key!=0 && label_en_cells[key]) 
-                    //         label_en.push(label_en_cells[key].text);
-                    // }
-                    // var len = props_json.length;
-                    // for(var i = 1; i < len; i++){
-                    //     if(props_db_cells[i]) 
-                    //         props_json.push(props_db_cells[i].text);
-                    //     if(label_zh_cells[i]) 
-                    //         label_zh.push(label_zh_cells[i].text);
-                    //     if(label_en_cells[i]) 
-                    //         label_en.push(label_en_cells[i].text); 
-                    // }
-                    // newData.props_json = props_json;
-                    // newData.props_db = props_db;
-                    // newData.label_zh = label_zh;
-                    // newData.label_en = label_en;
-                    // console.log('newData', JSON.stringify(newData));
                 }
                 this.$emit('update', newData)
             }

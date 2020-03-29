@@ -1,6 +1,6 @@
-# vue-electron-html
+# vue-electron-magic
 
-> An electron-vue project
+> An electron-vue project. It will be easy for you to create a vue page with api、mock、i18n etc.
 
 #### Build Setup
 
@@ -13,7 +13,6 @@ npm run dev
 
 # build electron application for production
 npm run build
-
 
 ```
 

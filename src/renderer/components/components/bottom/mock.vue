@@ -48,7 +48,7 @@ import tableContent from './templates/table'
                     res1.push(str1);
                 }                
                 //done
-                var item = '{\n' + res1.join(',\n') + '\n},';
+                var item = '{\n' + res1.join(',\n') + '\n}';
                 this.textarea = this.textarea.replace('{{{item}}}', item);
                 //replace baseurl
                 for(var i = 0; i < 4; i ++){
@@ -61,14 +61,14 @@ import tableContent from './templates/table'
                 // immediate: true,
                 deep: true,
                 handler(newValue, oldValue) {
-                    if(this.obj && this.obj.config){
+                    if(this.obj && this.obj.data && this.obj.config){
                         this.paraseObj();
                     }
                 }
             }
         },
         mounted () {
-            if(this.obj && this.obj.config){
+            if(this.obj && this.obj.data && this.obj.config){
                 this.paraseObj();
             }
         },

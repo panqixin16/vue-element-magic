@@ -1,5 +1,5 @@
 <template>
-    <div style="margin-bottom: 5px">
+    <div style="margin-bottom: 5px" v-if="$store.getters.copyButtonVisible">
         <el-button type="primary" icon="el-icon-document" size="mini" @click="handleCopy(content,$event)">
           {{ label }}
         </el-button>
@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         handleCopy(text, event) {
-            clip(text, event)
+            clip(text, event);
         },
     },
 }

@@ -165,7 +165,6 @@
         watch: {
             id(val){
                 this.getData();
-                // this.initSheet();
             },
             config: {
                 // immediate: true,

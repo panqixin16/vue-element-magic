@@ -104,14 +104,16 @@ import tableContent from './templates/table'
                 // immediate: true,
                 deep: true,
                 handler(newValue, oldValue) {
-                    if(newValue){
+                    if(this.obj && this.obj.data && this.obj.config){
                         this.paraseObj();
                     }
                 }
             }
         },
         mounted () {
-            this.paraseObj();
+            if(this.obj && this.obj.data && this.obj.config){
+                        this.paraseObj();
+                    }
         },
     }
 </script>

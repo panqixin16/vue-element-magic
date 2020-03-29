@@ -41,7 +41,8 @@ import tableContent from './templates/table'
             obj: {
                 deep: true,
                 handler(newValue, oldValue) {
-                    if(newValue) this.parseobj();
+                    if(this.obj && this.obj.data && this.obj.config) 
+                        this.parseobj();
                 }
             }
         },

@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-tabs type="border-card" value="vue" style="height:100%">
-            <el-tab-pane label=“json” v-if="false">
+            <el-tab-pane label="data" v-if="$store.getters.dataTabPaneVisible">
                 {{ json }}
             </el-tab-pane>
             <el-tab-pane name="config">
@@ -22,12 +22,6 @@
             <el-tab-pane label="Mock" name="Mock">
                 <mock :obj="obj"></mock>
             </el-tab-pane>
-            <!-- <el-tab-pane label="lang-zh" v-if="obj&&obj.config&&obj.config.withI18n">
-                <lang :obj="obj" type="zh"></lang>
-            </el-tab-pane>
-            <el-tab-pane label="lang-en" v-if="obj&&obj.config&&obj.config.withI18n">
-                <lang :obj="obj" type="en"></lang>
-            </el-tab-pane> -->
         </el-tabs>  
     </div>
 </template>
@@ -37,7 +31,6 @@ import tableContent from './templates/table'
 import configpanel from './configpanel';
 import vueContent from './vue'
 import apiContent from './api'
-// import lang from './lang'
 import language from './language'
 import mock from './mock'
     export default {

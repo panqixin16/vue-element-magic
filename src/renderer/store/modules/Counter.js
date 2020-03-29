@@ -1,5 +1,5 @@
 const state = {
-  main: 0
+  main: 0,
 }
 
 const mutations = {
@@ -8,7 +8,7 @@ const mutations = {
   },
   INCREMENT_MAIN_COUNTER (state) {
     state.main++
-  }
+  },
 }
 
 const actions = {

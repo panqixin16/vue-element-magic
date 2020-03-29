@@ -30,6 +30,10 @@
         <div class="name">Author</div>
         <div class="value">Simon</div>
       </div>
+      <div class="item">
+        <div class="name">Website</div>
+        <div class="value">https://www.vetop.top</div>
+      </div>
     </div>
   </div>
 </template>
